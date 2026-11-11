@@ -70,7 +70,7 @@ class HostedVerificationProvider(Protocol):
     ) -> HostedSession:
         """Crea la sesión en el proveedor y devuelve la URL para el cliente.
 
-        `ci_photo_path` es None si el vendedor no cargó la foto (sólo en modo "kyc").
+        `ci_photo_path` es None si el agente no cargó la foto (sólo en modo "kyc").
         """
         ...
 

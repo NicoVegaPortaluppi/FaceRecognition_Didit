@@ -1,7 +1,7 @@
 """Verificación del documento con Didit, server-to-server.
 
 Al crear la verificación, en segundo plano, se le mandan a Didit las fotos de la
-CI que cargó el vendedor (frente y, si está, dorso) a su API de ID Verification
+CI que cargó el agente (frente y, si está, dorso) a su API de ID Verification
 (`POST /v3/id-verification/`). Didit las evalúa con su propio sistema (que sea un
 documento físico y no una pantalla o una fotocopia, foto reemplazada, datos y
 formato) y devuelve Approved, Declined o In Review con sus avisos.
@@ -10,7 +10,7 @@ El cliente no hace nada: no se le pide que vuelva a subir la cédula.
 
 El resultado no cambia el estado final de la verificación (que depende de la
 prueba de vida y el face match). Se informa aparte, en `document`, para que el
-vendedor lo evalúe:
+agente lo evalúe:
     valid       Didit aprobó el documento ("Documento validado").
     suspicious  Didit lo rechazó o lo mandó a revisión ("Documento sospechoso").
     pending     Todavía no hay resultado.

@@ -2,10 +2,10 @@
 
 Usa una sesión alojada. Según DIDIT_WORKFLOW_MODE:
     biometric  Didit hace la prueba de vida y compara la cara con la foto de la CI
-               que cargó el vendedor, que se le envía como `portrait_image`.
+               que cargó el agente, que se le envía como `portrait_image`.
     kyc        El cliente escanea su cédula en la sesión: Didit la lee y verifica,
                hace la prueba de vida y compara la cara con la cédula escaneada. Se
-               le manda el número de CI que cargó el vendedor
+               le manda el número de CI que cargó el agente
                (`expected_details.identification_number`) para que lo compare con
                el de la cédula.
 El workflow (método de liveness, umbrales, intentos) se configura en la consola
@@ -197,7 +197,7 @@ class DiditProvider:
         }
         if self._kyc:
             # La cara se compara con la cédula que escanea el cliente; el número de CI
-            # que cargó el vendedor se compara con el de esa cédula.
+            # que cargó el agente se compara con el de esa cédula.
             expected = {"identification_number": ci_number}
             if self._settings.didit_expected_id_country:
                 expected["id_country"] = self._settings.didit_expected_id_country

@@ -15,10 +15,10 @@ su cédula (face match).
 |---------------------|-----------------------------------------------------------|--------|
 | `verification_api/` | **API de verificación** (lo que se entrega a la empresa) + página del cliente | 8000 |
 | `company_mock/`     | Servidor simulado del sistema de créditos de la empresa   | 8001   |
-| `seller_app/`       | Formulario del vendedor (Streamlit)                       | 8501   |
+| `seller_app/`       | Formulario del agente (Streamlit)                       | 8501   |
 
 ```
-Vendedor (Streamlit :8501)
+Agente (Streamlit :8501)
    │  foto CI + número CI
    ▼
 Empresa simulada (:8001) ── genera request_id ──► API de verificación (:8000)
@@ -87,7 +87,7 @@ cd verification_api && uvicorn app.main:app --port 8000 --reload
 # 2. Servidor simulado de la empresa
 cd company_mock && uvicorn app.main:app --port 8001 --reload
 
-# 3. Formulario del vendedor
+# 3. Formulario del agente
 cd seller_app && streamlit run app.py
 ```
 
@@ -243,21 +243,21 @@ workflow de `DIDIT_WORKFLOW_ID`:
 - `kyc` (por ejemplo, el workflow "Free KYC"): el cliente escanea su cédula en la sesión
   de Didit. Didit la lee y verifica, hace la prueba de vida y compara la cara con la
   cédula escaneada. No se manda `portrait_image` (Didit lo ignora en estos workflows) y
-  se manda el número de CI que cargó el vendedor como
+  se manda el número de CI que cargó el agente como
   `expected_details.identification_number`: si no coincide con el de la cédula, Didit
   lo marca y manda la sesión a revisión. El resultado del documento aparece en
   `document` y **sí** forma parte de la decisión final. La verificación server-to-server
   no se hace, aunque `DIDIT_DOCUMENT_CHECK` esté activo. Las fotos de la CI (frente y
-  dorso) son opcionales: si el vendedor las carga, quedan sólo como registro. El número
+  dorso) son opcionales: si el agente las carga, quedan sólo como registro. El número
   de CI sigue siendo obligatorio, porque es el que Didit compara con la cédula.
   `DIDIT_EXPECTED_ID_COUNTRY` (por ejemplo `PRY`) controla además el país de la cédula;
   en sandbox conviene dejarlo vacío porque Didit devuelve documentos de USA.
 - `biometric` (por ejemplo, "Liveness activa + Face match CI"): sólo prueba de vida y
-  face match contra la foto de la CI del vendedor, que se manda como `portrait_image`.
+  face match contra la foto de la CI del agente, que se manda como `portrait_image`.
   El documento se verifica aparte, server-to-server (ver abajo).
 
 **Verificación del documento (server-to-server, modo `biometric`).** Al crear la verificación, en
-segundo plano, las fotos de la CI que cargó el vendedor (frente y dorso) se mandan a la
+segundo plano, las fotos de la CI que cargó el agente (frente y dorso) se mandan a la
 API de ID Verification de Didit (`POST /v3/id-verification/`, con
 `perform_document_liveness`). Didit evalúa con su propio sistema si el documento es
 auténtico (que no sea una pantalla o una fotocopia, foto reemplazada, datos y formato).
@@ -268,7 +268,7 @@ El cliente no tiene que volver a subir la cédula.
   `suspicious` (lo rechazó o lo mandó a revisión), `pending` o `error`, con los avisos
   de Didit y los datos leídos (número, nombre, vencimiento).
 - En el formulario, **Consultar estado** muestra "Documento validado" en verde o
-  "Documento sospechoso" en rojo, para que el vendedor lo evalúe.
+  "Documento sospechoso" en rojo, para que el agente lo evalúe.
 - Se reintenta si Didit no responde, al arrancar la API y al consultar el estado.
 - Se desactiva con `DIDIT_DOCUMENT_CHECK=false`.
 - **En sandbox, Didit no analiza la imagen:** siempre aprueba y devuelve datos ficticios

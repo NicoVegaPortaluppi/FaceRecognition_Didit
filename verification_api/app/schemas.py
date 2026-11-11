@@ -16,7 +16,7 @@ from app.services.verification import CheckStatus
 class ErrorResponse(BaseModel):
     detail: str = Field(description="Descripción del error, en lenguaje simple.")
 
-    model_config = ConfigDict(json_schema_extra={"examples": [{"detail": "El link expiró. Pedile al vendedor que genere uno nuevo."}]})
+    model_config = ConfigDict(json_schema_extra={"examples": [{"detail": "El link expiró. Pedile al agente que genere uno nuevo."}]})
 
 
 class VerificationCreated(BaseModel):
@@ -72,8 +72,8 @@ class DocumentCheck(BaseModel):
     """Verificación de autenticidad del documento hecha por Didit.
 
     Con DIDIT_WORKFLOW_MODE=biometric se hace server-to-server con las fotos que cargó
-    el vendedor y no cambia el estado de la verificación: se informa aparte para que
-    el vendedor lo evalúe. Con DIDIT_WORKFLOW_MODE=kyc es la cédula que escaneó el
+    el agente y no cambia el estado de la verificación: se informa aparte para que
+    el agente lo evalúe. Con DIDIT_WORKFLOW_MODE=kyc es la cédula que escaneó el
     cliente en la sesión de Didit, y sí forma parte de la decisión final.
     """
 

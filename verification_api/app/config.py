@@ -75,12 +75,12 @@ class Settings(BaseSettings):
     didit_media_max_attempts: int = Field(default=3, ge=1)
     # Qué hace el workflow de Didit (tiene que coincidir con DIDIT_WORKFLOW_ID):
     #   "biometric": sólo prueba de vida y face match contra la foto de la CI que cargó
-    #       el vendedor (se manda como portrait_image). El documento se verifica aparte,
+    #       el agente (se manda como portrait_image). El documento se verifica aparte,
     #       server-to-server, si DIDIT_DOCUMENT_CHECK está activo.
     #   "kyc": el cliente escanea su cédula en la sesión de Didit (lectura del documento,
     #       prueba de vida y face match contra la cédula escaneada). No se manda
     #       portrait_image ni se hace la verificación server-to-server; se manda el número
-    #       de CI que cargó el vendedor para que Didit lo compare con el de la cédula.
+    #       de CI que cargó el agente para que Didit lo compare con el de la cédula.
     didit_workflow_mode: Literal["biometric", "kyc"] = "biometric"
     # Sólo en modo "kyc": país esperado de la cédula (ISO alfa-3, por ejemplo PRY). Si la
     # cédula es de otro país, Didit lo marca. Vacío: no se controla. En sandbox Didit

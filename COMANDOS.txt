@@ -1,0 +1,69 @@
+COMANDOS PARA LEVANTAR EL PROYECTO (Frente 01 - FaceID, versión Didit)
+=======================================================================
+El entorno de Python (pyenv: ReimpexFaceID_Didit) se activa solo al entrar a
+la carpeta del proyecto, gracias al archivo .python-version.
+Puertos: API 8000, empresa 8001, formulario 8501.
+
+
+TERMINAL 1 - Túnel temporal de Cloudflare (HTTPS para el celular)
+-----------------------------------------------------------------
+cloudflared tunnel --url http://localhost:8000
+
+  Copiar la URL que aparece (https://xxxx.trycloudflare.com).
+  La URL cambia cada vez que se reinicia el túnel.
+
+
+TERMINAL 2 - Actualizar la URL pública y el webhook de Didit
+-------------------------------------------------------------
+(Solo cuando la URL del túnel es nueva.)
+
+1. Editar verification_api/.env y poner la URL del túnel:
+     PUBLIC_BASE_URL=https://xxxx.trycloudflare.com
+
+2. Registrar el webhook de Didit con la URL nueva:
+     cd ~/WillDom/Reimpex_Frente01_FaceID_Didit/verification_api
+     python -m scripts.setup_didit_webhook
+
+  Esta terminal se puede cerrar después.
+
+
+TERMINAL 3 - API de verificación (puerto 8000)
+----------------------------------------------
+cd ~/WillDom/Reimpex_Frente01_FaceID_Didit/verification_api
+uvicorn app.main:app --port 8000 --reload
+
+  Si se cambia el .env, detener con Ctrl+C y volver a levantar
+  (--reload no detecta cambios en el .env).
+
+
+TERMINAL 4 - Servidor simulado de la empresa (puerto 8001)
+----------------------------------------------------------
+cd ~/WillDom/Reimpex_Frente01_FaceID_Didit/company_mock
+uvicorn app.main:app --port 8001 --reload
+
+
+TERMINAL 5 - Formulario del vendedor, Streamlit (puerto 8501)
+-------------------------------------------------------------
+cd ~/WillDom/Reimpex_Frente01_FaceID_Didit/seller_app
+streamlit run app.py
+
+
+DIRECCIONES ÚTILES
+------------------
+Formulario del vendedor:        http://localhost:8501
+Documentación de la API:        http://localhost:8000/docs
+Webhooks recibidos (empresa):   http://localhost:8001/webhooks/events
+Chequeo del túnel:              https://xxxx.trycloudflare.com/health
+
+
+MOTOR DE VERIFICACIÓN
+---------------------
+En verification_api/.env:
+  VERIFICATION_PROVIDER=didit   -> el cliente se verifica en la página de Didit
+  VERIFICATION_PROVIDER=stub    -> el cliente graba en nuestra página (motor propio)
+Después de cambiarlo, reiniciar la API (terminal 3).
+
+
+PARA DETENER TODO
+-----------------
+Ctrl+C en cada terminal.

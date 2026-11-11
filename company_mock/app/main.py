@@ -1,7 +1,7 @@
 """Servidor simulado del sistema de créditos de la empresa.
 
 Reemplaza al sistema real mientras no esté disponible para pruebas:
-- Recibe los datos que carga el vendedor (desde Streamlit).
+- Recibe los datos que carga el agente (desde Streamlit).
 - Genera un ID de solicitud de crédito y llama a la API de verificación.
 - Recibe los webhooks de la API de verificación y los registra en los logs.
 
@@ -112,7 +112,7 @@ def _verify_signature(body: bytes, timestamp: str | None, signature: str | None)
         raise HTTPException(status_code=401, detail="Firma inválida.")
 
 
-# ---------- Endpoints usados por el formulario del vendedor ----------
+# ---------- Endpoints usados por el formulario del agente ----------
 
 @app.post("/credit-requests", response_model=CreditRequestCreated, tags=["Solicitudes de crédito"])
 async def create_credit_request(

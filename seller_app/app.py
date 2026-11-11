@@ -1,6 +1,6 @@
-"""Formulario del vendedor (simulado).
+"""Formulario del agente (simulado).
 
-Simula la pantalla del sistema de créditos donde el vendedor carga la foto
+Simula la pantalla del sistema de créditos donde el agente carga la foto
 y el número de CI del cliente. Envía los datos al servidor simulado de la
 empresa, no directamente a la API de verificación.
 
@@ -48,7 +48,7 @@ STATUS_LABELS = {
 
 
 def normalize_ci(value: str) -> str:
-    """Permite que el vendedor escriba la CI con puntos o espacios (4.567.890)."""
+    """Permite que el agente escriba la CI con puntos o espacios (4.567.890)."""
     return re.sub(r"[.\s-]", "", value)
 
 
@@ -116,7 +116,7 @@ def show_document(document: dict | None) -> None:
     """Resultado de la verificación del documento hecha por Didit.
 
     Según el modo de la API, es la verificación server-to-server de las fotos que
-    cargó el vendedor (no cambia el estado: el vendedor lo evalúa por su cuenta) o
+    cargó el agente (no cambia el estado: el agente lo evalúa por su cuenta) o
     la cédula que escaneó el cliente en la sesión de Didit.
     """
     if not document:

@@ -63,14 +63,14 @@ class InvalidWebhookSignature(AppError):
 
 class LinkNotFound(AppError):
     status_code = 404
-    default_detail = "El link no es válido. Revisá que esté completo o pedile uno nuevo al vendedor."
+    default_detail = "El link no es válido. Revisá que esté completo o pedile uno nuevo al agente."
 
 
 class LinkExpired(AppError):
     status_code = 410
-    default_detail = "El link expiró. Pedile al vendedor que genere uno nuevo."
+    default_detail = "El link expiró. Pedile al agente que genere uno nuevo."
 
 
 class LinkAlreadyUsed(AppError):
     status_code = 410
-    default_detail = "Este link ya fue utilizado. Si necesitás verificarte de nuevo, pedile un link nuevo al vendedor."
+    default_detail = "Este link ya fue utilizado. Si necesitás verificarte de nuevo, pedile un link nuevo al agente."
