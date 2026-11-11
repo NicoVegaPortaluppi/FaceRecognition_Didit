@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Paso 1: instrucciones -->
+<section id="step-intro" class="step">
+  <h1>Verificá tu identidad</h1>
+  <p class="lead">Vamos a grabar un video corto de tu cara para confirmar que sos vos.</p>
+  <ol class="instructions">
+    <li>Buscá un lugar con buena luz.</li>
+    <li>Sacate lentes de sol, gorra o barbijo.</li>
+    <li>Ubicá tu cara dentro del óvalo y mirá a la cámara.</li>
+  </ol>
+  <p class="note">La grabación dura {{ recording_seconds }} segundos. Te vamos a pedir permiso para usar la cámara.</p>
+  <button id="btn-start" class="btn btn-primary" type="button">Comenzar</button>
+</section>
+
+<!-- Paso 2: cámara y grabación -->
+<section id="step-camera" class="step" hidden>
+  <div class="camera">
+    <video id="preview" autoplay muted playsinline></video>
+    <div class="camera-guide" aria-hidden="true"></div>
+    <div id="rec-indicator" class="rec-indicator" hidden>
+      <span class="rec-dot" aria-hidden="true"></span>
+      <span id="rec-text">Grabando...</span>
+    </div>
+  </div>
+  <p id="camera-hint" class="note" aria-live="polite">Ubicá tu cara dentro del óvalo.</p>
+  <button id="btn-record" class="btn btn-primary" type="button" disabled>Grabar</button>
+</section>
+
+<!-- Paso 3: subida -->
+<section id="step-uploading" class="step" hidden>
+  <h1>Enviando video...</h1>
+  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+  <p id="progress-text" class="note">0%</p>
+</section>
+
+<!-- Paso 4: confirmación -->
+<section id="step-done" class="step" hidden>
+  <h1>Video enviado correctamente</h1>
+  <p class="message message-success">Ya podés cerrar esta página. El vendedor va a recibir el resultado.</p>
+</section>
+
+<!-- Error -->
+<section id="step-error" class="step" hidden>
+  <h1 id="error-title">Algo salió mal</h1>
+  <p id="error-message" class="message message-error"></p>
+  <button id="btn-retry" class="btn btn-primary" type="button" hidden>Intentar de nuevo</button>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>window.VERIFY_CONFIG = {{ config | tojson }};</script>
+<script src="/static/verify.js"></script>
+{% endblock %}

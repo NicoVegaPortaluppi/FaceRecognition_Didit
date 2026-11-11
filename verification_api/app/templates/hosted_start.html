@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="step">
+  <h1>Verificá tu identidad</h1>
+  <p class="lead">Vamos a usar la cámara de tu celular para confirmar que sos vos.</p>
+  <ol class="instructions">
+    <li>Buscá un lugar con buena luz.</li>
+    <li>Sacate lentes de sol, gorra o barbijo.</li>
+    <li>Seguí las instrucciones de la pantalla. Te puede pedir que parpadees o muevas la cabeza.</li>
+    <li>Durante la prueba la pantalla cambia de color. Es normal.</li>
+  </ol>
+
+  {% if error %}
+  <p class="message message-error">{{ error }}</p>
+  {% endif %}
+
+  <form method="post" action="/verify/{{ token }}/start" id="start-form">
+    <!-- Texto provisorio: reemplazar por el texto legal de la empresa. -->
+    <label class="consent">
+      <input type="checkbox" name="consent" value="true" required>
+      <span>Acepto que se capturen imágenes de mi cara y se comparen con la foto de mi cédula,
+        a través de un proveedor externo, para verificar mi identidad.</span>
+    </label>
+    <button class="btn btn-primary" type="submit">Continuar</button>
+  </form>
+  <p class="note">Vas a continuar en la página de nuestro proveedor de verificación.</p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Evita crear dos sesiones si el cliente toca el botón dos veces.
+  document.getElementById("start-form").addEventListener("submit", function (event) {
+    event.submitter.disabled = true;
+    event.submitter.textContent = "Abriendo...";
+  });
+</script>
+{% endblock %}

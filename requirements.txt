@@ -1,0 +1,14 @@
+# API de verificación y servidor simulado de la empresa
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.9
+pydantic-settings>=2.5
+python-multipart>=0.0.12
+sqlalchemy>=2.0.35
+jinja2>=3.1
+httpx>=0.27
+pillow>=10.0
+
+# Formulario del vendedor
+streamlit>=1.45
+qrcode[pil]>=8.0

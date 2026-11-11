@@ -1,0 +1,14 @@
+# Estilo visual del formulario. Para cambiar colores o tipografía, editar acá.
+[theme]
+base = "light"
+primaryColor = "#1f5eff"
+backgroundColor = "#f7f7f5"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#1c1c1e"
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false
+
+[server]
+port = 8501

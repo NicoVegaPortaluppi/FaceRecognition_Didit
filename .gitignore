@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.example
+COMANDOS.txt
+WorkFlow.png
+verification_api/storage/
+verification_api/data/
